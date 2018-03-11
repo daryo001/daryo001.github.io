@@ -1,0 +1,19 @@
+<html>
+  <head>
+    <title>時計</title>
+  </head>
+  <body>
+    <center><div id="clock">
+    </div></center>
+    <script>
+      var time;
+      var clock = document.getElementById("clock");
+      function t() {
+        time = new Date();
+        clock.innerHTML = time.getHours()+"時"+time.getMinutes()+"分"+time.getSeconds()+"秒";
+        setInterval(t, 1000);
+      }
+      t();
+    </script>
+  </body>
+</html>
