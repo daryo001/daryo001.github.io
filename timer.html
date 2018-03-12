@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <title>ラーメンタイマー</title>
+  </head>
+  <body>
+    <div id="timer">
+      <h1>ラーメンタイマー</h1>
+      <p><font size="8">
+        <span id="min">3</span>分
+        <span id="sec">0</span>秒
+      </font></p>
+      <p>
+        <input type="button" style="padding:10px 30px;" id="start" value="開始">
+        <input type="button" id="stop" value="停止" disabled>
+        <input type="button" id="reset" value="やり直し">
+      </p>
+    </div>
+    <script>
+      window.onload = function(){
+        var time = 180;
+        var counter;
+        var min = document.getElementById("min");
+        var sec = document.getElementById("sec");
+        var start = document.getElementById("start");
+        var stop = document.getElementById("stop");
+        var reset = document.getElementById("reset");
+
+        start.onclick = function(){
+          da();
+          counter = setInterval(count,1000);
+        }
+
+        stop.onclick = function(){
+          da();
+          clearInterval(counter);
+        }
+
+        reset.onclick = function(){
+          time = 180;
+          sec.innerHTML = time % 60;
+          min.innerHTML = Math.floor(time/60);
+        }
+
+        function da(){
+          if(start.disabled){
+            start.disabled = false;
+            stop.disabled = true;
+          }else{
+            start.disabled = true;
+            stop.disabled = false;
+          }
+        }
+
+          function count(){
+            if(time === 0){
+            　sec.innerHTML = 0;
+            　min.innerHTML = 0;
+            　da();
+            　alert("3分経過!!!");
+            　clearInterval(counter);
+          　} else {
+            　time -= 1;
+            　sec.innerHTML = time % 60;
+            　min.innerHTML = Math.floor( time / 60 );
+            }
+          }
+        }
+    </script>
+  </body>
+</html>
