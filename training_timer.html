@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <title>トレーニングタイマー</title>
+  </head>
+  <body>
+    <h1>インターバルタイマー</h1>
+    <p><span id="set">7</span>set</p>
+    <p>
+      <input type="button" id="set_p" value="SET+">
+      <input type="button" id="set_m" value="SET-">
+    <p>remain<span id="r_sec">60</span>s</p>
+    <p>
+        break<span id="b_sec">15</span>s
+    </p>
+    <p>
+      <input type="button" id="start" value="START">
+      <input type="button" id="stop" value="STOP" disabled>
+      <input type="button" id="reset" value="RESET">
+    </p>
+    <script>
+      var set = document.getElementById("set");
+      var set_p = document.getElementById("set_p");
+      var set_m = document.getElementById("set_m");
+      var s_count = 7;
+
+      function click_set_p(){
+        if (s_count < 30){
+          s_count += 1;
+          set.innerHTML = s_count;
+        }
+      }
+      set_p.addEventListener('click',click_set_p);
+
+      function click_set_m(){
+        if (s_count > 2){
+          s_count -= 1;
+          set.innerHTML = s_count;
+        }
+      }
+      set_m.addEventListener('click',click_set_m);
+
+      var start = document.getElementById("start");
+      var stop = document.getElementById("stop");
+      var reset = document.getElementById("reset");
+
+      function d(){
+        if(start.disabled){
+          start.disabled = false;
+          stop.disabled = true;
+        }else{
+          start.disabled = true;
+          stop.disabled = false;
+        }
+      }
+
+      var r_time = 60;
+      var r_counter;
+      var r_sec = document.getElementById("r_sec");
+      var b_time = 15;
+      var b_counter;
+      var b_sec = document.getElementById("b_sec");
+
+      function str(){
+        d();
+        r_counter = setInterval(r_count,1000);
+      }
+      start.addEventListener('click',str);
+
+      function sto(){
+        d();
+        if(r_time !== 0){
+          clearInterval(r_counter);
+        }else{
+          clearInterval(b_counter);
+        }
+      }
+      stop.addEventListener('click',sto);
+
+      function res(){
+        r_time = 60;
+        b_time = 15;
+        r_sec.innerHTML = r_time;
+        b_sec.innerHTML = b_time;
+      }
+      reset.addEventListener('click',res);
+
+        function r_count(){
+          if(r_time === 0 && s_count !== 0){
+            r_sec.innerHTML = 0;
+            clearInterval(r_counter);
+            b_count();
+            b_counter = setInterval(b_count,1000);
+            r_sec.innerHTML = 60;
+          }else if(s_count === 0){
+              clearInterval(r_counter);
+              alert('お疲れ様でした！');
+            }else{
+              r_time -= 1;
+              r_sec.innerHTML = r_time;
+            }
+          }
+
+        function b_count(){
+          if(b_time === 0){
+            b_sec.innerHTML = 0;
+            clearInterval(b_counter);
+            b_sec.innerHTML = 15;
+            r_time = 60;
+            b_time = 15;
+            r_counter = setInterval(r_count,1000);
+            s_count -= 1;
+            set.innerHTML = s_count;
+          }else{
+            b_time -= 1;
+            b_sec.innerHTML = b_time;
+          }
+        }
+
+
+
+    </script>
+  </body>
+</html>
